@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ES2020",
+    "module": "commonjs",
+      "lib": [
+         "es5",
+         "es6",
+         "ES2020"
+      ],
+    "outDir": "build/",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "declaration": true,
+    "noEmitOnError": true, 
+    "noUnusedParameters": true,
+    "noImplicitReturns": true, 
+    "noImplicitAny": true,
+    "paths": {
+      "@/models/*": ["./models/*"],
+      "@/utils/*": ["./utils/*"],
+      "@/controllers/*": ["./controllers/*"],
+      "@/middlewares/*": ["./middlewares/*"],
+    }
+  },
+  "include": ["source/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "files": ["source/definitions/custom.d.ts"]
+}
