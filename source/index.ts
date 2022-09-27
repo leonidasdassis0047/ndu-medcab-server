@@ -7,6 +7,7 @@ import { StoresController } from './controllers/storeController';
 import { ProductsController } from './controllers/productsController';
 import { OrdersController } from './controllers/ordersController';
 import { CategoriesController } from './controllers/categoriesController';
+import { UserController } from './controllers/usersController';
 
 validateEnv();
 
@@ -16,7 +17,8 @@ const app = new App(
     new CategoriesController(),
     new OrdersController(),
     new ProductsController(),
-    new StoresController()
+    new StoresController(),
+    new UserController()
   ],
   Number(process.env.PORT)
 );
