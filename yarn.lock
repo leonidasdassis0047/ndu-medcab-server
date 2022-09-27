@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@cme-pro/mongoose-search@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@cme-pro/mongoose-search/-/mongoose-search-1.0.0.tgz#d8d3e4bd15ca2fafb897626a4de2ba3af06fcfb5"
+  integrity sha512-fuN3z3O15jcCasjMwmGcTUn157gxdR+QVkH6gBHLWyr0aIjb7l7+oCFac3XD2cjR8tQJV4A1saWN6Ue+zzwspQ==
+
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
@@ -2015,6 +2020,11 @@ mongodb@4.9.1:
     socks "^2.7.0"
   optionalDependencies:
     saslprep "^1.0.3"
+
+mongoose-partial-full-search@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/mongoose-partial-full-search/-/mongoose-partial-full-search-0.0.6.tgz#af17eb61781bedb0b99f2229f4cd46cfeeff62dd"
+  integrity sha512-33lt6gczDoD562oAVGUtgldrMF/lh/hQF1NKLIVYdEd/I0LHHZDYiz2GBY+dt+LTX2XLQW3DCjfUg/+1qiX5qg==
 
 mongoose@^6.3.0:
   version "6.6.1"

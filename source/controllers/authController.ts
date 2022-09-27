@@ -39,7 +39,7 @@ export class AuthController implements IController {
 
   /**************************************************
    * @desc      Create a new user.
-   * @route     POST /api/users/signup
+   * @route     POST /api/auth/signup
    * @access    Public
    */
   private signup = async (
@@ -76,7 +76,7 @@ export class AuthController implements IController {
 
   /**************************************************
    * @desc      Signin user.
-   * @route     POST /api/users/signin
+   * @route     POST /api/auth/signin
    * @access    Public
    */
   private signin = async (
@@ -114,7 +114,7 @@ export class AuthController implements IController {
 
   /**************************************************
    * @desc      Get currently logged-in user.
-   * @route     GET /api/users/me
+   * @route     GET /api/auth/me
    * @access    Protected
    */
   private getCurrentUser = (

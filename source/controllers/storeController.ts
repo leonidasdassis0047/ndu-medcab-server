@@ -28,7 +28,7 @@ export class StoresController implements IController {
     this.router.get(`${this.path}/recommended`, this.getRecommendedStores);
     this.router.get(`${this.path}/nearby`, this.getNearbyStores);
 
-    this.router.post(`${this.path}/search`, this.searchStores);
+    this.router.get(`${this.path}/search`, this.searchStores);
 
     this.router.post(
       `${this.path}/create`,
@@ -59,6 +59,10 @@ export class StoresController implements IController {
       this.addStoreWorker
     );
   }
+
+  private escapeRegex = (text: string): string => {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  };
 
   /**
    * @desc      Fetching all medical stores, with filters, sorting and pagination.
@@ -185,50 +189,40 @@ export class StoresController implements IController {
       const radius = distance / EARTH_RADIUS;
 
       const query = {
-        location: {
-          // $near: {
-          //   $maxDistance: radius,
-          //   $minDistance: 0,
-          //   $geometry: {
-          //     type: 'Point',
-          //     coordinates: [lng, lat]
-          //   }
-          // }
-          $geoWithin: {
-            $centerSphere: [[lng, lat], radius]
-          }
-        }
+        // location: {
+        //   $geoWithin: {
+        //     $centerSphere: [[lng, lat], radius]
+        //   }
+        // }
       };
 
       const stores = await Store.find(query);
 
-      const message = 'nearby stores';
-      return res
-        .status(200)
-        .json({ error: false, count: stores.length, message, data: stores });
+      return res.status(200).json({ count: stores.length, results: stores });
     } catch (error: any) {
-      console.log(error);
       next(new HTTPException(500, error?.message));
     }
   };
 
   /**
    * @desc      Search medical stores and drugs.
-   * @route     GET /api/stores/search
+   * @route     GET /api/stores/search/?q=xxx
    * @access    Protected
    */
   private searchStores = async (
-    _req: Request,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response | void> => {
     try {
-      const stores = await Store.find({});
+      if (!req.query.q)
+        return next(new HTTPException(400, 'provide search query'));
+      const searchQuery = req.query.q;
+      const regex = new RegExp(this.escapeRegex(searchQuery as string), 'gi');
+      // const stores = await Store.find({ $text: { $search: 'beno' } });
+      const stores = await Store.find({ name: regex });
 
-      const message = 'search stores';
-      return res
-        .status(200)
-        .json({ error: false, count: stores.length, message, data: stores });
+      return res.status(200).json({ count: stores.length, data: stores });
     } catch (error: any) {
       next(new HTTPException(500, error?.message));
     }
@@ -254,7 +248,7 @@ export class StoresController implements IController {
       }
       const store = await query;
 
-      res.status(200).json({ error: false, data: store });
+      res.status(200).json({ data: store });
     } catch (error: any) {
       next(new HTTPException(500, error?.message));
     }
@@ -364,8 +358,7 @@ export class StoresController implements IController {
     try {
       const store = await Store.findById(req.params.store_id);
 
-      const message = 'store was updated';
-      res.status(200).json({ error: false, message, data: store });
+      res.status(200).json({ data: store });
     } catch (error: any) {
       next(new HTTPException(500, error?.message));
     }

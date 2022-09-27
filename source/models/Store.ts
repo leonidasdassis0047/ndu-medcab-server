@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+
 import { User } from '../models/User';
 import HTTPException from '../utils/HTTPException';
 import { IStore } from '../interfaces/Store';
@@ -13,7 +14,8 @@ const StoreSchema = new Schema<IStore>(
       required: true,
       trim: true,
       unique: true,
-      maxlength: 50
+      maxlength: 50,
+      searchable: true
     },
     description: { type: String, maxlength: 500 },
     phones: [{ type: String }],
@@ -45,7 +47,7 @@ const StoreSchema = new Schema<IStore>(
     agents: [{ type: Schema.Types.ObjectId, ref: 'User' }]
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
-).index({ location: '2dsphere' });
+).index({ location: '2dsphere', tags: 'text', name: 'text' });
 
 // find store owner first and attach to them
 // elevate role

@@ -5,12 +5,13 @@ import { Order, OrderItem } from '../models/Order';
 import { Types } from 'mongoose';
 import { AuthenticationMiddleware } from '../middlewares';
 import { IProduct } from '../interfaces/Product';
+import { Socket } from 'socket.io';
 
 export class OrdersController implements IController {
   public path = '/orders';
   public router = Router();
 
-  constructor() {
+  constructor(public socket?: Socket) {
     this.initialiseRoutes();
   }
 
